@@ -1,0 +1,47 @@
+# lets make a build container
+FROM rust:latest as builder
+
+# copy our melissadata libraries in here
+COPY *.so /
+ENV MD_LIB=/
+
+# get our source code
+RUN mkdir /src
+WORKDIR /src
+ADD git@github.com:Growth-Health/dp_tools.git dp_tools
+ADD git@github.com:Growth-Health/ncoa_rust.git ncoa_rust
+ADD git@github.com:Growth-Health/dqs_rust.git dqs_rust
+
+# compile it
+WORKDIR /src/dp_tools
+RUN cargo b -r
+WORKDIR /src/dqs_rust
+RUN cargo b -r --bins
+WORKDIR /src/ncoa_rust
+RUN cargo b -r --bin csl_report
+
+# copy binaries to root
+RUN mv /src/dp_tools/target/release/dp_tool /
+RUN mv /src/dp_tools/target/release/mpi_tool /
+RUN mv /src/dp_tools/target/release/aws_tool /
+RUN mv /src/dp_tools/target/release/query_tool /
+RUN mv /src/dp_tools/target/release/convert_flat /
+RUN mv /src/dqs_rust/target/release/dqs_env /
+RUN mv /src/ncoa_rust/target/release/csl_report /
+WORKDIR /
+
+# now create a bare bones one ditching the builder rust toolchain and source
+#FROM amazonlinux:latest
+FROM debian:bookworm-slim
+SHELL [ "/bin/bash", "-c" ]
+RUN mkdir tools
+COPY --from=builder /*.so /*_tool /dqs_env /csl_report /convert_flat /tools
+COPY set_env.sh /tools
+COPY run.sh /tools
+RUN mkdir /data
+# expose a port for the query_tool server to run of if we want it
+EXPOSE 3000
+
+ENTRYPOINT [ "/tools/run.sh" ]
+CMD [ "bash", "-i" ]
+
