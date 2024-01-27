@@ -51,6 +51,9 @@ RUN mkdir /data
 # expose a port for the query_tool server to run of if we want it
 EXPOSE 3000
 
+# run everything through our environment script
 ENTRYPOINT [ "/tools/run.sh" ]
-CMD [ "bash", "-i" ]
-
+# and by default in the data directory which should be mounted
+WORKDIR /data
+# default command is to run a query server
+CMD [ "query_tool", "server", "-a", "0.0.0.0:3000", "-d", "database.json", "-g" ]

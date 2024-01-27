@@ -1,4 +1,10 @@
 #!/bin/bash
+
+##############################################################################
+# this is a launcher script run inside the container!!
+##############################################################################
+
+
 source /tools/set_env.sh
 export PATH=$PATH:/tools
 if [ $# -eq 0 ] 
