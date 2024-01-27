@@ -15,4 +15,6 @@ are needed inside the images, and several scripts for running the query server a
 
 1. **run_query_request.sh** can be used to send a json formatted request to a running instance of query server ( -r request.json )
 
-1.  A directory of test data and request files can be found on the Growth.Health shared google drive under Technology / Test data and images as well as a precompiled container image0
+1. A directory of test data and request files can be found on the Growth.Health shared google drive under Technology / Test data and images as well as a precompiled container image0
+
+1. Binaries can be copied out of a running container with *docker cp* if we want to use the containers for CI and then pull and deploy binaries 
