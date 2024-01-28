@@ -27,8 +27,8 @@ FROM debian:bookworm-slim
 SHELL [ "/bin/bash", "-c" ]
 RUN mkdir tools
 COPY --from=builder /*_tool /csl_report /convert_flat /tools
-COPY set_env.sh /tools
-COPY run.sh /tools
+COPY container_contents/set_env.sh /tools
+COPY container_contents/run.sh /tools
 RUN mkdir /data
 # expose a port for the query_tool server to run of if we want it
 EXPOSE 3000

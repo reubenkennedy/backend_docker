@@ -12,7 +12,7 @@ RUN yum install -y gcc gcc-c++
 RUN curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path --profile minimal -y
 
 # copy our melissadata libraries in here
-COPY *.so /
+COPY container_contents/*.so /
 ENV MD_LIB=/
 
 # get our source code
@@ -45,8 +45,8 @@ FROM amazonlinux:latest
 SHELL [ "/bin/bash", "-c" ]
 RUN mkdir tools
 COPY --from=builder /*.so /*_tool /dqs_env /csl_report /convert_flat /tools
-COPY set_env.sh /tools
-COPY run.sh /tools
+COPY container_contents/set_env.sh /tools
+COPY container_contents/run.sh /tools
 RUN mkdir /data
 # expose a port for the query_tool server to run of if we want it
 EXPOSE 3000
