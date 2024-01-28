@@ -6,6 +6,7 @@ RUN mkdir /src
 WORKDIR /src
 ADD git@github.com:Growth-Health/dp_tools.git dp_tools
 ADD git@github.com:Growth-Health/ncoa_rust.git ncoa_rust
+ADD git@github.com:Growth-Health/dqs_rust.git dqs_rust
 
 # compile it
 WORKDIR /src/dp_tools
