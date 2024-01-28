@@ -1,7 +1,10 @@
 #!/bin/bash
 dt=`date +"%Y%m%d"`
-cp /data/dqs_links/*.so .
-chmod 755 *.so
+if [ -f /data/dqs_links/libmdAddr.so ]
+then
+    cp /data/dqs_links/*.so ./container_contents/.
+    chmod 755 container_contents/*.so
+fi
 if [ "$1" = "aws" ]
 then
     docker build -t gh_aws --ssh default -f Dockerfile.amd64_aws . && docker save -o gh_aws.$dt.tar gh_aws  && gzip gh_aws.$dt.tar
