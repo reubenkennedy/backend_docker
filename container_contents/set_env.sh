@@ -45,7 +45,7 @@ export DPV_SOFT_VER=${CASS_SOFTWARE_VER}
 export DPV_REL_DT=${CASS_DATA_YYYYMMDD}
 
 # set a bunch of cass version vars for ncoa reporting
-if [ -f /tools/dqs_env ]
+if [ -f /tools/dqs_env -a -f /data/address/data/mdAddr.dat ]
 then
     eval `/tools/dqs_env`
 fi
