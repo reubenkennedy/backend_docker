@@ -15,4 +15,4 @@ fi
 
 program=$1
 shift
-$program $*
+exec $program $*
