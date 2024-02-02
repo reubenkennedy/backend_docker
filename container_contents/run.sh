@@ -6,7 +6,7 @@
 
 
 source /tools/set_env.sh
-export PATH=$PATH:/tools
+export PATH=.:$PATH:/tools
 if [ $# -eq 0 ] 
 then
     echo "No program name/arguments given to run!"
